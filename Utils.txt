@@ -1,0 +1,59 @@
+Steps to bring data from database over to the site
+Step1: 
+make a migration
+
+bash:-
+php artisan make:migration create_nameofthetable_table --create=nameofthetable
+
+Step2:
+Define Table Structure in Migration File
+in the database/migrations/xxxx_xx_xx_create_fruits_table.php
+
+example schema:- 
+public function up()
+{
+    Schema::create('nameofthetable', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('color');
+        $table->decimal('price', 8, 2);
+        $table->integer('quantity');
+        $table->timestamps();
+    });
+}
+
+run the migration 
+php artisan migrate \\tables will be created by this
+
+Step3:
+Create a Model For fruits
+php artisan make:model nameofthetable
+Open app/Models/Fruit.php and define fillable properties
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+Example:- 
+class nameofthetable extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['name', 'color', 'price', 'quantity'];
+}
+
+Step 4:- 
+Insert some data into the table
+bash:- 
+php artisan tinker
+
+use App/Modes/nameofthetable
+
+nameofthetable::create(['name'=>'Apple','color'=>'Red','price'=>1.50,'quantity'=>100]);
+..
+..
+..
+
+
+Step 5: make new controller
+php artisan make:controller nameofthetableController
