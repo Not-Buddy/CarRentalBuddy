@@ -52,7 +52,8 @@ class CarController extends Controller
 
     // 4. Update UI feedback
     session()->flash('booked_car_id', $id);
-    return redirect()->back()->with('success', 'Car booked successfully!');
+    return redirect()->route('cars.show', ['id' => $id])->with('success', 'Car booked successfully!');
+
 }
 
 
@@ -81,7 +82,7 @@ class CarController extends Controller
     public function show($id)
     {
         $car = Car::findOrFail($id);
-        return response()->json($car, 200);
+        return view('cars.show', compact('car'));
     }
 
     // Update the specified car in storage

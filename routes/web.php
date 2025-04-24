@@ -30,6 +30,8 @@ Route::post('/login',[UserController::class,'login']);
     ->name('book.car')
     ->middleware('auth');
 
+Route::get('/cars/{id}', [CarController::class, 'show'])->name('cars.show');
+
 
   
 // Route::post('/register', function(){
