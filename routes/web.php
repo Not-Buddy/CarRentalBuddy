@@ -26,6 +26,10 @@ Route::post('/login',[UserController::class,'login']);
   Route::get('/welcome' ,function(){
     return view('welcome');
   });
+  Route::post('/book-car/{id}', [CarController::class, 'book'])
+    ->name('book.car')
+    ->middleware('auth');
+
 
   
 // Route::post('/register', function(){

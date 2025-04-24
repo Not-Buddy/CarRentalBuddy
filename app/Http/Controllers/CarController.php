@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use Illuminate\Http\Request;
+use App\Models\Booking; 
 
 class CarController extends Controller
 {
@@ -21,6 +22,38 @@ class CarController extends Controller
         $cars = Car::all();
         return view('logged-in', compact('cars'));
     }
+
+    public function book($id)
+{
+    // 1. Validate the request
+    $car = Car::find($id);
+
+    // Check if car exists
+    if (!$car) {
+        return redirect()->back()->with('error', 'Car not found!');
+    }
+
+    // 2. Check user authentication
+    if (!auth()->check()) {
+        return redirect()->route('login')->with('error', 'Please login to book a car.');
+    }
+
+    // 3. Create booking record
+    try {
+        Booking::create([
+            'car_id' => $car->id,
+            'user_id' => auth()->id(),
+            'booking_date' => now(), // or use a date picker in your form
+            'status' => 'confirmed'
+        ]);
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Booking failed: ' . $e->getMessage());
+    }
+
+    // 4. Update UI feedback
+    session()->flash('booked_car_id', $id);
+    return redirect()->back()->with('success', 'Car booked successfully!');
+}
 
 
     // Store a newly created car in storage

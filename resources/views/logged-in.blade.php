@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
  </body>
+     @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
                 {{-- Logout button --}}
                 <div class="absolute top-4 right-4 sm:right-6 md:right-8 lg:right-10">
                     <form action="/logout" method="POST">
@@ -26,10 +33,19 @@
                 <span class="text-lg font-bold">₹{{ number_format($car->rental_price_per_day, 2) }}</span>
                 <span class="text-sm text-gray-500">/ day</span>
             </div>
-            <form action="/book-car/{{ $car->id }}" method="POST" class="mt-4">
+            <form action="{{ route('book.car', $car->id) }}" method="POST">
                 @csrf
-                <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">Book Car</button>
+                @if(session('booked_car_id') == $car->id)
+                    <button type="button" class="w-full px-4 py-2 text-white bg-green-600 rounded-lg" disabled>
+                        Booked
+                    </button>
+                @else
+                    <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                        Book Car
+                    </button>
+                @endif
             </form>
+            
         </div>
     </div>
 @endforeach
