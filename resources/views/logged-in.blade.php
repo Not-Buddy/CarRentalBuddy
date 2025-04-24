@@ -2,7 +2,6 @@
 <html>
  </body>
 
-
  @if(Auth::check())
  <div style="position: absolute; top: 16px; left: 16px; display: flex; align-items: center;">
      <svg width="24" height="24" fill="currentColor" style="margin-right: 8px;">
@@ -13,6 +12,7 @@
  </div>
 @endif
 
+@extends('layouts.app')
 
      @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -66,6 +66,7 @@
                     </div>
                 </div>
                 {{-- Car display ends above --}}
-
  </body>
+
+
 </html>
