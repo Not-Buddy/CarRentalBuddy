@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
  </body>
+
+
+ @if(Auth::check())
+ <div style="position: absolute; top: 16px; left: 16px; display: flex; align-items: center;">
+     <svg width="24" height="24" fill="currentColor" style="margin-right: 8px;">
+         <circle cx="12" cy="8" r="4" />
+         <ellipse cx="12" cy="17" rx="7" ry="5" />
+     </svg>
+     <span>{{ Auth::user()->name }}</span>
+ </div>
+@endif
+
+
      @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
